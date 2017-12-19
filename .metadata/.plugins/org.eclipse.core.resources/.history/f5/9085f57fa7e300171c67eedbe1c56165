@@ -1,0 +1,55 @@
+
+public class Board {
+	Piece[][] board = new Piece[8][6];
+	
+	public Board() {
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 6; j++) {
+				board[i][j] = new Piece();
+			}
+		}
+	}
+	
+	public Piece[][] getBoard() {
+		return board;
+	}
+	
+	public Piece[][] changeBoardAtPosition(int x, int y, Piece p) {
+		board[x][y] = p;
+		return board;
+	}
+	
+	public Boolean rowSettledForColumn(int column, Piece p) {
+		for(int row = 0; row < 6; row++) {
+			if(board[column][row].getColorCode() == 0) {
+				changeBoardAtPosition(column,row,p);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public String showBoard() {
+		String str = "";
+		System.out.print("1");
+		for(int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++) {
+				if(board[i][j].getColorCode() == 0) {
+					str += "_";
+				}
+				else if(board[i][j].getColorCode() == 1) {
+					str += "O";
+				}
+				else if(board[i][j].getColorCode() == 2) {
+					str += "X";
+				}
+				else {
+					str += "@";
+				}
+			}
+			str = "\n";
+		}
+		System.out.println(str);
+		return str;
+	}
+}

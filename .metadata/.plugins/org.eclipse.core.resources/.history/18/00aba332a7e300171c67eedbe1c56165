@@ -1,0 +1,112 @@
+import java.util.Scanner;
+
+public class GameController {
+	
+	private Board board = new Board();
+	
+	private boolean winner = false;
+	Scanner keyboard = new Scanner(System.in);
+	
+	public Boolean play(Player p) {
+		//initialize temp variable column
+		int col = 0;
+		
+		//prompt user to enter column
+		System.out.println("Enter the number 1-8 of the column that you want to place your piece");
+		col = keyboard.nextInt();
+		
+		while(col < 1 || col > 8) {
+			System.out.println("The column number must be an integer 1-8");
+			col = keyboard.nextInt();
+		}
+		
+		return board.rowSettledForColumn(col, p.playPiece());
+		
+	}
+	
+//	public int checkForWinner() {
+//		return checkHorizontal() + checkVertical() + checkLDiag() + checkRDiag();
+//	}
+	
+//	private int checkRDiag() {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	private int checkLDiag() {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+	private int checkVertical() {
+		// TODO Auto-generated method stub
+		int inARow = 0;
+		int currPlayer = 0;
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 6; j++) {
+				if(board.getBoard()[i][j].getColorCode() == currPlayer) {
+					inARow++;
+				}
+				else {
+					currPlayer = board.getBoard()[i][j].getColorCode();
+					inARow = 1;
+				}
+				if(inARow >= 4) {
+					return currPlayer;
+				}
+			}
+			currPlayer = 0;
+			inARow = 0;
+		}
+		return currPlayer;
+	}
+
+	private int checkHorizontal() {
+		// TODO Auto-generated method stub
+		int inARow = 0;
+		int currPlayer = 0;
+		for(int i = 0; i < 6; i++) {
+			for(int j = 0; j < 8; j++) {
+				if(board.getBoard()[j][i].getColorCode() == currPlayer) {
+					inARow++;
+				}
+				else {
+					currPlayer = board.getBoard()[j][i].getColorCode();
+					inARow = 1;
+				}
+				if(inARow >= 4) {
+					return currPlayer;
+				}
+			}
+			currPlayer = 0;
+			inARow = 0;
+		}
+		return currPlayer;
+		
+	}
+
+	public static void main(String[] args) {
+		
+		//initialize players
+		Player player1 = new Player("red");
+		Player player2 = new Player("black");
+		
+		//initialize board
+		Board board = new Board();
+		
+//		//returns true if its player 1's turn, false if player 2's
+//		private Boolean onesMove = true;
+//		
+//		while(!winner) {
+//			if(onesMove) {
+//				player1.play();
+//			}
+//			else {
+//				player2.play();
+//			}
+//			onesMove = !onesMove;
+//			checkforWinner();
+//		}
+	}
+
+}

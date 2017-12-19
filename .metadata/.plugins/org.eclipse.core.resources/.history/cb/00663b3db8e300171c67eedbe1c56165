@@ -1,0 +1,105 @@
+
+public class Board {
+	Piece[][] board = new Piece[8][6];
+	
+	public Board() {
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 6; j++) {
+				board[i][j] = new Piece();
+			}
+		}
+	}
+	
+	public Piece[][] getBoard() {
+		return board;
+	}
+	
+	public Piece[][] changeBoardAtPosition(int x, int y, Piece p) {
+		board[x][y] = p;
+		return board;
+	}
+	
+	public Boolean rowSettledForColumn(int column, Piece p) {
+		for(int row = 0; row < 6; row++) {
+			if(board[column][row].getColorCode() == 0) {
+				changeBoardAtPosition(column,row,p);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int checkHorizontal() {
+		// TODO Auto-generated method stub
+		int inARow = 0;
+		int currPlayer = -1;
+		for(int i = 0; i < 6; i++) {
+			for(int j = 0; j < 8; j++) {
+				if(board[j][i].getColorCode() == currPlayer) {
+					inARow++;
+				}
+				else {
+					currPlayer = board[j][i].getColorCode();
+					inARow = 1;
+				}
+				if(inARow >= 4 && currPlayer != 0) {
+					System.out.println("The winner is: " + currPlayer);
+					return currPlayer;
+				}
+			}
+			
+			currPlayer = 0;
+			inARow = 0;
+		}
+		return currPlayer;
+	}
+	
+	private int checkVertical() {
+		// TODO Auto-generated method stub
+		int inARow = 0;
+		int currPlayer = 0;
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 6; j++) {
+				if(board[i][j].getColorCode() == currPlayer) {
+					inARow++;
+				}
+				else {
+					currPlayer = board[i][j].getColorCode();
+					inARow = 1;
+				}
+				if(inARow >= 4 && currPlayer != 0) {
+					System.out.println("the winner is:" + currPlayer);
+					return currPlayer;
+				}
+			}
+			currPlayer = 0;
+			inARow = 0;
+		}
+		return currPlayer;
+	}
+	
+	public String showBoard() {
+		String str = "";
+		int cols = board[0].length;
+		int rows = board.length;
+		for(int i = 0; i < cols; i++) {
+			for(int j = 0; j < rows; j++) {
+				if(board[j][cols-i-1].getColorCode() == 0) {
+					str += "_";
+				}
+				else if(board[j][cols-i-1].getColorCode() == 1) {
+					str += "O";
+				}
+				else if(board[j][cols-i-1].getColorCode() == 2) {
+					str += "X";
+				}
+				else {
+					str += "@";
+				}
+			}
+			str += "\n";
+		}
+		System.out.println(str);
+		return str;
+	}
+}
